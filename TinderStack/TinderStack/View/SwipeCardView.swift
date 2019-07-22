@@ -147,20 +147,22 @@ class SwipeCardView : UIView {
         switch sender.state {
         case .ended:
             if (card.center.x) > 400 {
-                delegate?.swipeDidEnd(on: card)
-                UIView.animate(withDuration: 0.2) {
+                UIView.animate(withDuration: 0.2, animations: {
                     card.center = CGPoint(x: centerOfParentContainer.x + point.x + 200, y: centerOfParentContainer.y + point.y + 75)
                     card.alpha = 0
                     self.layoutIfNeeded()
-                }
+                }, completion: { _ in
+                    self.delegate?.swipeDidEnd(on: card)
+                })
                 return
             }else if card.center.x < -65 {
-                delegate?.swipeDidEnd(on: card)
-                UIView.animate(withDuration: 0.2) {
+                UIView.animate(withDuration: 0.2, animations: {
                     card.center = CGPoint(x: centerOfParentContainer.x + point.x - 200, y: centerOfParentContainer.y + point.y + 75)
                     card.alpha = 0
                     self.layoutIfNeeded()
-                }
+                }, completion: { _ in
+                    self.delegate?.swipeDidEnd(on: card)
+                })
                 return
             }
             UIView.animate(withDuration: 0.2) {
